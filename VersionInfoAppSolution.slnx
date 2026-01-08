@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="VersionInfoApp.Tests/VersionInfoApp.Tests.csproj" Id="923cde82-37ae-415b-acb5-b532e2e47948" />
   <Project Path="VersionInfoApp/VersionInfoApp.csproj" />
 </Solution>
