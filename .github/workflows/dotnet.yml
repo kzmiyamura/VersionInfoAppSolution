@@ -1,5 +1,6 @@
 name: .NET Build & Test
 
+# main ブランチへの push / PR で実行
 on:
   push:
     branches: [ main ]
@@ -7,22 +8,28 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    # リポジトリをチェックアウト
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
+    # .NET 10 をセットアップ
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 10.0.x
 
+    # 依存関係の復元
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore VersionInfoAppSolution.sln
 
+    # ビルド
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build VersionInfoAppSolution.sln --no-restore --configuration Release
 
+    # テスト
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test VersionInfoAppSolution.sln --no-build --verbosity normal
