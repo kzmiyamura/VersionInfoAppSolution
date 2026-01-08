@@ -17,7 +17,7 @@
 dotnet run --project VersionInfoApp
 dotnet test VersionInfoApp.Tests
 
-`````
+```text
 VersionInfoAppSolution/
 │
 ├─ VersionInfoApp/
@@ -33,7 +33,7 @@ VersionInfoAppSolution/
 ├─ README.md
 └─ VersionInfoAppSolution.sln
 
-`````
+```
 
 ---
 
