@@ -9,25 +9,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # 設定を一箇所で管理
+    env:
+      BUILD_CONFIG: Release
 
     steps:
-    # リポジトリをチェックアウト
     - uses: actions/checkout@v3
 
-    # .NET SDK セットアップ
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4 # v4にアップグレードを推奨
       with:
         dotnet-version: 10.0.x
+        include-preview: true # .NET 10はプレビュー版のため必須
 
-    # 依存関係を復元（ソリューション単位で指定）
     - name: Restore dependencies
       run: dotnet restore VersionInfoAppSolution.sln
 
-    # ビルド（ソリューション単位で指定）
     - name: Build
-      run: dotnet build VersionInfoAppSolution.sln --no-restore --configuration Release
+      run: dotnet build VersionInfoAppSolution.sln --no-restore --configuration ${{ env:BUILD_CONFIG }}
 
-    # テスト実行（ソリューション単位で指定）
     - name: Run tests
-      run: dotnet test VersionInfoAppSolution.sln --no-build --verbosity normal
+      # ビルド時と同じ Configuration を指定するのがポイント！
+      run: dotnet test VersionInfoAppSolution.sln --no-build --configuration ${{ env:BUILD_CONFIG }} --verbosity normal
