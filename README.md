@@ -16,7 +16,9 @@
 ```bash
 dotnet run --project VersionInfoApp
 dotnet test VersionInfoApp.Tests
+```
 
+## フォルダ構成
 ```text
 VersionInfoAppSolution/
 │
