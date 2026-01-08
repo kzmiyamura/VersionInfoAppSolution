@@ -7,24 +7,27 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    # リポジトリをチェックアウト
+    - uses: actions/checkout@v3
 
+    # .NET SDK セットアップ
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '10.0.x'
+        dotnet-version: 10.0.x
 
+    # 依存関係を復元（ソリューション単位で指定）
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore VersionInfoAppSolution.sln
 
-    - name: Build project
-      run: dotnet build --no-restore --configuration Release
+    # ビルド（ソリューション単位で指定）
+    - name: Build
+      run: dotnet build VersionInfoAppSolution.sln --no-restore --configuration Release
 
+    # テスト実行（ソリューション単位で指定）
     - name: Run tests
-      working-directory: ./VersionInfoAppSolution
-      run: dotnet test --no-build --verbosity normal --configuration Release
+      run: dotnet test VersionInfoAppSolution.sln --no-build --verbosity normal
